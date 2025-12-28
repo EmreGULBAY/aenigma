@@ -41,7 +41,7 @@ class HotelDataLoader:
             
             df = pd.read_excel(self.file_path, sheet_name=sheet_name)
             
-            hotel_id = idx + 1  # 1, 2, 3
+            hotel_id = idx + 1
             df['hotel_id'] = hotel_id
             
             if 'occupied_rooms' in df.columns:
