@@ -131,7 +131,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
-data/
+data/restructured_data.xlsx
 
 # Spyder project settings
 .spyderproject
