@@ -1,0 +1,53 @@
+data:
+  file_path: "data/restructured_data.xlsx"
+  sheet_names: ["Otel1", "Otel2", "Otel3"]
+  sequence_length: 14
+  stride: 1
+  train_split: 0.8
+  batch_size: 128
+  random_seed: 42
+
+features:
+  temporal: ["day_of_week", "month", "day_of_week_sin", "day_of_week_cos", "month_sin", "month_cos"]
+  consumption: ["total_electricity_kwh", "total_water_m3", "total_natural_gas_kwh"]
+  occupancy: ["occupied_rooms", "total_guests", "occupancy_rate", "arrival_pax", "departure_pax"]
+  weather: ["temp_avg", "temp_max", "feels_like_avg", "feels_like_max"]
+  categorical: ["is_friday", "is_saturday", "is_sunday", "is_high_season"]
+  exclude: ["date", "Category", "Column Name"]
+
+model:
+  hidden_dim: 128
+  num_layers: 3
+  hotel_embedding_dim: 16
+  dropout: 0.1
+  activation: "tanh"
+
+training:
+  epochs_autoencoder: 1000
+  epochs_supervised: 1000
+  epochs_joint: 2000
+  learning_rate: 0.001
+  beta1: 0.9
+  beta2: 0.999
+  gradient_clip: 1.0
+  
+  lambda_reconstruction: 10.0
+  lambda_supervised: 1.0
+  lambda_adversarial: 1.0
+  
+  patience: 200
+  min_delta: 0.0001
+
+generation:
+  num_synthetic_days_per_hotel: 5000
+  temperature: 1.0
+evaluation:
+  discriminator_epochs: 100
+  test_split: 0.2
+  metrics: ["discriminative_score", "ks_test", "wasserstein", "correlation"]
+
+output:
+  model_dir: "outputs/models"
+  data_dir: "outputs/synthetic_data"
+  figures_dir: "outputs/figures"
+  logs_dir: "outputs/logs"
